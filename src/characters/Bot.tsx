@@ -37,6 +37,7 @@ export default class Bot extends Phaser.Physics.Arcade.Sprite {
     })
   }
 
+  // clean up: destroy looping event 
   destroy(fromScene?: boolean) {
     this.moveEvent.destroy();
     super.destroy(fromScene)
