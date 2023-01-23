@@ -12,9 +12,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <button className="App-button" onClick={handleClick}>
+        {/* <button className="App-button" onClick={handleClick}>
           click me
-        </button>
+        </button> */}
       </header>
     </div>
   )

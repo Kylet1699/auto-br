@@ -1,0 +1,40 @@
+{
+	"textures": [
+		{
+			"image": "bob",
+			"format": "RGBA8888",
+			"size": {
+				"w": 383,
+				"h": 214
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "../characters/Bob_16x16.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 384,
+						"h": 224
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 10,
+						"w": 383,
+						"h": 214
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 383,
+						"h": 214
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7"
+	}
+}
