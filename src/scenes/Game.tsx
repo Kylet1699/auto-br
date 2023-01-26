@@ -4,10 +4,13 @@ import { debugDraw } from '../utils/debug';
 import { createBobAnims } from '../anims/BobAnims'
 import Bot from '../characters/Bot';
 
+import '../characters/Bob';
+import Bob from '../characters/Bob';
+
 export default class Game extends Phaser.Scene {
 
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-  private bob!: Phaser.Physics.Arcade.Sprite;
+  private bob!: Bob;
 
   constructor() {
     super('game')
@@ -32,13 +35,16 @@ export default class Game extends Phaser.Scene {
     wallsLayer.setCollisionByProperty({ collides: true });
 
     // Debug: show collision tiles
-    debugDraw(wallsLayer, this);
+    // debugDraw(wallsLayer, this);
+
+    // @ts-ignore
+    this.bob = this.add.bob(64, 64, 'bob')
 
     // add bob sprite
-    this.bob = this.physics.add.sprite(64, 64, 'bob');
+    // this.bob = this.physics.add.sprite(64, 64, 'bob');
 
     // set size of hitbox
-    this.bob.body.setSize(16, 20, false)
+    // this.bob.body.setSize(16, 20, false)
 
     // this.cameras.main.startFollow(this.bob, true);
 
@@ -55,34 +61,25 @@ export default class Game extends Phaser.Scene {
     // Add collider for bob to collide into walls
     this.physics.add.collider(this.bob, wallsLayer);
     this.physics.add.collider(bots, wallsLayer);
+
+    this.physics.add.collider(this.bob, bots, this.handlePlayerCollision, undefined, this)
+  }
+
+  private handlePlayerCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+    const bot = obj2 as Bot;
+    
+    const dx = this.bob.x - bot.x;
+    const dy = this.bob.y - bot.y;
+
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200)
+
+    this.bob.handleDamage(dir);
   }
 
   update(t: number, dt: number) {
-    if (!this.cursors || !this.bob) return
-
-    const speed = 100;
-
-    if (this.cursors.left?.isDown) {
-      this.bob.setVelocity(-speed, 0);
-      this.bob.anims.play('bob-run-right', true);
-
-      this.bob.scaleX = -1;
-      this.bob.body.offset.x = 16;
-    } else if (this.cursors.right?.isDown) {
-      this.bob.setVelocity(speed, 0);
-      this.bob.anims.play('bob-run-right', true);
-
-      this.bob.scaleX = 1;
-      this.bob.body.offset.x = 0;
-    } else if (this.cursors.up?.isDown) {
-      this.bob.setVelocity(0, -speed);
-      this.bob.anims.play('bob-run-up', true);
-    } else if (this.cursors.down?.isDown) {
-      this.bob.setVelocity(0, speed);
-      this.bob.anims.play('bob-run-down', true);
-    } else {
-      this.bob.anims.play('bob-idle');
-      this.bob.setVelocity(0, 0)
+    if (this.bob) {
+      this.bob.update(this.cursors)
     }
+
   }
 }
