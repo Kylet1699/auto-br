@@ -7,6 +7,9 @@ import Bot from '../characters/Bot';
 import '../characters/Bob';
 import Bob from '../characters/Bob';
 
+// scene events
+import { sceneEvents } from '../events/EventsCenter';
+
 export default class Game extends Phaser.Scene {
 
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -21,6 +24,8 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    this.scene.run('game-ui')
+
     // Create animation for bob
     createBobAnims(this.anims)
 
@@ -74,6 +79,8 @@ export default class Game extends Phaser.Scene {
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200)
 
     this.bob.handleDamage(dir);
+
+    sceneEvents.emit('player-health-changed', this.bob.health)
   }
 
   update(t: number, dt: number) {

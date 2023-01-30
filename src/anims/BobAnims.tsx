@@ -39,6 +39,13 @@ const createBobAnims = ( anims: Phaser.Animations.AnimationManager ) => {
     repeat: -1,
     // duration: 2000,
   })
+
+  anims.create({
+    key: 'bob-sit-right',
+    frameRate: 10,
+    frames: anims.generateFrameNumbers('bob', { start: 115, end: 120 }),
+    repeat: -1,
+  })
 }
 
 export {

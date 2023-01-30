@@ -16,6 +16,9 @@ export default class Preloader extends Phaser.Scene {
 
     // this.load.atlas('zombie', '../characters/zombie.png', '../characters/zombie.json')
     this.load.spritesheet('bob', '../characters/bob.png',  { frameWidth: 16, frameHeight: 32 })
+
+    this.load.image('ui-heart-empty', '../characters/frames/ui_heart_empty.png');
+    this.load.image('ui-heart-full', '../characters/frames/ui_heart_full.png');
   }
 
   create() {
